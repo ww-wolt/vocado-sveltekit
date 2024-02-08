@@ -2,5 +2,5 @@
 	export let data;
 </script>
 
-<h1>Search</h1>
+<h1>Learn</h1>
 

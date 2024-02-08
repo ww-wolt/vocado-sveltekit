@@ -1,7 +1,7 @@
 import { redirect } from '@sveltejs/kit';
 
-export function load({ cookies, url }) {
-	if (!cookies.get('logged_in')) {
-		throw redirect(303, `/login?redirectTo=${url.pathname}`);
+export function load({ locals, url }) {
+	if (!locals.loggedIn) {
+		redirect(303, `/login?redirectTo=${url.pathname}`);
 	}
 }
