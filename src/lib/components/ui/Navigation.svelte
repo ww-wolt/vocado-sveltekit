@@ -5,6 +5,11 @@
   import { Library } from 'lucide-svelte';
   import { Button } from '$lib/components/ui/button';
   import { LogOut } from 'lucide-svelte';
+  import { page } from '$app/stores'; 
+
+
+  $: console.log("🚀 ~ $page.url.pathname  :", $page.url.pathname  );
+
   export let data;
   $: console.log("🚀 ~ data:", data);
 </script>
@@ -32,12 +37,12 @@
 			<div id="drawer-content" class="flex h-full flex-col gap-2">
 				<!-- <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Discover</h2> -->
 				
-					<Button href="/search" variant="ghost" class="w-full justify-start text-md   align-bottom">
+					<Button href="/search" variant={$page.url.pathname === "/search" ? "secondary" : "ghost"} class="w-full justify-start text-md   align-bottom">
             <Search class="mr-3 h-5 w-5 "/>
 						
 						Dictionary
 					</Button>
-          <Button href="/learn" variant="ghost" class="w-full justify-start text-md   align-bottom">
+          <Button href="/learn" variant={$page.url.pathname === "/learn" ? "secondary" : "ghost"} class="w-full justify-start text-md   align-bottom">
             <Library class="mr-3 h-5 w-5 "/>
 						
 						Learn
