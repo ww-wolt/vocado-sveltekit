@@ -96,7 +96,7 @@
 				<Alert.Root variant="destructive">
 					<AlertCircle class="h-4 w-4" />
 					<Alert.Title>Sign up failed</Alert.Title>
-					<Alert.Description>An error occurred during sign up.</Alert.Description>
+					<Alert.Description>Please check your inputs.</Alert.Description>
 				</Alert.Root>
 			</div>
 		{/if}
