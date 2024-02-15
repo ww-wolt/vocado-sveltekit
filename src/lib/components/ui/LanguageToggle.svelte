@@ -1,6 +1,8 @@
 <script>
 	import { Button } from '$lib/components/ui/button';
-	const flags = ['fr', 'gb'];
+	import fr from '$lib/assets/flag-icons/fr.svg';
+	import en from '$lib/assets/flag-icons/en.svg';
+	const flags = [fr, en];
 	let flagIndex = 0;
 </script>
 
@@ -12,7 +14,7 @@
 	}}
 >
 	<div class="inner-boarder relative overflow-hidden rounded-sm">
-		<img src={`/flag-icons/${flags[flagIndex]}.svg`} alt="" class=" h-6 w-auto" />
+		<img src={flags[flagIndex]} alt="" class=" h-auto w-8" />
 	</div>
 </Button>
 

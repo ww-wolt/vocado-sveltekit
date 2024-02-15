@@ -2,7 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 
 export function load({ locals, url }) {
 	if (locals.loggedIn) {
-		redirect(307, `/`);
+		redirect(303, `/`);
 	}
 
 	// Make redirectTo query param available in page data so it can also be used as a query param on the action
@@ -23,6 +23,6 @@ export const actions = {
 			return fail(422, { ...data, error: true });
 		}
 		const redirectTo = url.searchParams.get('redirectTo');
-		redirect(307, redirectTo || '/');
+		redirect(303, redirectTo || '/');
 	}
 };

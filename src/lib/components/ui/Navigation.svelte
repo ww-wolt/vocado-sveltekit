@@ -1,64 +1,88 @@
 <script>
 	import { Menu } from 'lucide-svelte';
 	import { X } from 'lucide-svelte';
-  import { Search } from 'lucide-svelte';
-  import { Library } from 'lucide-svelte';
-  import { Button } from '$lib/components/ui/button';
-  import { LogOut } from 'lucide-svelte';
-  import { page } from '$app/stores'; 
+	import { Search } from 'lucide-svelte';
+	import { Library } from 'lucide-svelte';
+	import { Button } from '$lib/components/ui/button';
+	import { LogOut } from 'lucide-svelte';
+	import { page } from '$app/stores';
 
+	export let data;
 
-  $: console.log("🚀 ~ $page.url.pathname  :", $page.url.pathname  );
+	let navOpen = false;
 
-  export let data;
-  $: console.log("🚀 ~ data:", data);
+	function getButtonVariant(href, currentPath) {
+		return currentPath === href ? 'secondary' : 'ghost';
+	}
+
+	function closeNav() {
+		navOpen = false;
+	}
 </script>
 
-<!-- <div class=" bg-violet-800 w-full h-36">
-  <p>Navigation</p>
-</div> -->
-
 <nav class="flex">
-	<input type="checkbox" id="drawer-toggle" class="peer sr-only relative opacity-0" />
+	<input
+		type="checkbox"
+		id="drawer-toggle"
+		class="peer sr-only relative opacity-0"
+		bind:checked={navOpen}
+	/>
 	<label for="drawer-toggle" class="fixed left-0 top-0 z-30 m-4 rounded-lg p-1 peer-checked:hidden">
 		<Menu class="h-8 w-8 " />
 	</label>
-  <label for="drawer-toggle" class="fixed left-0 top-0 z-30 m-4 rounded-lg p-1 hidden peer-checked:block ">
+	<label
+		for="drawer-toggle"
+		class="fixed left-0 top-0 z-30 m-4 hidden rounded-lg p-1 peer-checked:block"
+	>
 		<X class="h-8 w-8 " />
 	</label>
 
-	<div id="background-overlay-dark"
-		class="fixed z-20 left-0 top-0 h-full w-full bg-black opacity-0 transition-all duration-500 peer-checked:opacity-50 pointer-events-none peer-checked:pointer-events-auto"
+	<div
+		id="background-overlay-dark"
+		class="pointer-events-none fixed left-0 top-0 z-20 h-full w-full bg-black opacity-0 transition-all duration-500 peer-checked:pointer-events-auto peer-checked:opacity-50"
 	></div>
 	<div
 		class="fixed left-0 top-0 z-20 h-full w-3/4 max-w-96 -translate-x-full transform bg-white shadow-lg transition-all duration-500 peer-checked:translate-x-0"
 	>
-		<div class=" h-full pl-6 pr-6 pb-8 pt-24">
+		<div class=" h-full pb-8 pl-6 pr-6 pt-24">
 			<div id="drawer-content" class="flex h-full flex-col gap-2">
-				<!-- <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Discover</h2> -->
-				
-					<Button href="/search" variant={$page.url.pathname === "/search" ? "secondary" : "ghost"} class="w-full justify-start text-md   align-bottom">
-            <Search class="mr-3 h-5 w-5 "/>
-						
-						Dictionary
-					</Button>
-          <Button href="/learn" variant={$page.url.pathname === "/learn" ? "secondary" : "ghost"} class="w-full justify-start text-md   align-bottom">
-            <Library class="mr-3 h-5 w-5 "/>
-						
-						Learn
-					</Button>
-          <div class="mt-auto">
-            <h2 class="px-4 text-md font-medium ">Jonas Wolter</h2>
-          <p class="mb-2 px-4 text-sm text-muted-foreground">jonas.wolter.ch@gmail.com</p>
-          </div>
-          
-          <!-- <h2 class="mt-auto">Jonas Wolter</h2> -->
-          <Button href="/logout" variant="ghost" class="w-full justify-start text-md  align-bottom">
-            <LogOut class="mr-3 h-5 w-5 "/>
-						
-						Log out
-					</Button>
-					<!-- <Button variant="ghost" class="w-full justify-start">
+				<Button
+					on:click={closeNav}
+					href="/search"
+					variant={getButtonVariant('/search', $page.url.pathname)}
+					class="text-md w-full justify-start align-bottom"
+				>
+					<Search class="mr-3 h-5 w-5 " />
+
+					Dictionary
+				</Button>
+				<Button
+					on:click={closeNav}
+					href="/learn"
+					variant={getButtonVariant('/learn', $page.url.pathname)}
+					class="text-md w-full justify-start align-bottom"
+				>
+					<Library class="mr-3 h-5 w-5 " />
+
+					Learn
+				</Button>
+				<div class="mt-auto">
+					<h2 class="text-md px-4 font-medium">Jonas Wolter</h2>
+					<p class="mb-2 px-4 text-sm text-muted-foreground">jonas.wolter.ch@gmail.com</p>
+				</div>
+
+				<!-- <h2 class="mt-auto">Jonas Wolter</h2> -->
+				<Button
+					on:click={closeNav}
+					href="/logout"
+					variant="ghost"
+					class="text-md w-full justify-start align-bottom"
+				>
+					<LogOut class="mr-3 h-5 w-5 " />
+
+					Log out
+				</Button>
+				<!-- <Button variant="ghost" class="w-full justify-start">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
@@ -95,7 +119,7 @@
 						</svg>
 						Radio
 					</Button> -->
-				
+
 				<!-- <h2 class=" justify-self-start text-lg font-semibold">Drawer</h2>
 				<p class="mt-auto text-gray-500">This is a drawer.</p>
         <p class="text-gray-500">This is a drawer.</p> -->

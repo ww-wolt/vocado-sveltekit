@@ -1,8 +1,8 @@
 <script>
-	import { cn } from "$lib/utils";
-	import { alertVariants } from ".";
+	import { cn } from '$lib/utils';
+	import { alertVariants } from '.';
 	let className = undefined;
-	export let variant = "default";
+	export let variant = 'default';
 	export { className as class };
 </script>
 

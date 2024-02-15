@@ -1,9 +1,9 @@
 <script>
-	import { cn } from "$lib/utils";
+	import { cn } from '$lib/utils';
 	let className = undefined;
 	export { className as class };
 </script>
 
-<div class={cn("text-sm [&_p]:leading-relaxed", className)} {...$$restProps}>
+<div class={cn('text-sm [&_p]:leading-relaxed', className)} {...$$restProps}>
 	<slot />
 </div>

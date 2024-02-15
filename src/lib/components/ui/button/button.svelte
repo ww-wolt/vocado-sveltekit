@@ -1,10 +1,10 @@
 <script>
-	import { Button as ButtonPrimitive } from "bits-ui";
-	import { cn } from "$lib/utils";
-	import { buttonVariants } from ".";
+	import { Button as ButtonPrimitive } from 'bits-ui';
+	import { cn } from '$lib/utils';
+	import { buttonVariants } from '.';
 	let className = undefined;
-	export let variant = "default";
-	export let size = "default";
+	export let variant = 'default';
+	export let size = 'default';
 	export let builders = [];
 	export { className as class };
 </script>
