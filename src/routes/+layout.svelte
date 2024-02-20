@@ -38,7 +38,7 @@
 					});
 					// console.log('🚀 ~ downloadDictionary ~ stringArray:', stringArray);
 
-					const searchString = 'sala';
+					const searchString = 'lol';
 					// uFuzzySearch2(searchString, stringArray);
 
 					searchFuzzysort(searchString, prepareFuzzysortData(results.data));
