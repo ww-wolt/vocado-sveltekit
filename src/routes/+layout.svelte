@@ -21,7 +21,7 @@
 	async function downloadDictionary() {
 		try {
 			console.log('Start downloading dictionary');
-			const response = await fetch('/dictionaries/de-en.csv', { priority: 'low' });
+			const response = await fetch('/dictionaries/rawwww/de-en.csv', { priority: 'low' });
 			const blob = await response.blob();
 			console.log('Finished downloading dictionary');
 			Papa.parse(blob, {

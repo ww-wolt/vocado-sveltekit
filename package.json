@@ -8,7 +8,7 @@
 		"preview": "vite preview",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"convert-dictionaries": "node src/lib/dictionaries/convert.js"
+		"convert-dictionaries": "node static/dictionaries/convert.js"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
