@@ -18,6 +18,7 @@ export async function GET({ url, fetch }) {
 	const suggestionsURL = `/dictionaries/optimized/${searchGroup}.txt`;
 
 	try {
+		const fetchTimer = startTimer();
 		const res = await fetch(suggestionsURL);
 
 		if (!res.ok) {
@@ -25,9 +26,17 @@ export async function GET({ url, fetch }) {
 		}
 
 		const rawText = await res.text();
+		const fetchTime = fetchTimer();
+
+		const prepareTimer = startTimer();
 		const preparedData = prepareFuzzysort(rawText);
+		const prepareTime = prepareTimer();
+
+		const searchTimer = startTimer();
 		const searchResults = searchFuzzysort(query, preparedData);
-		return json({ suggestions: searchResults });
+		const searchTime = searchTimer();
+
+		return json({ fetchTime, prepareTime, searchTime, suggestions: searchResults });
 	} catch (error) {
 		return json({ error: 'An unexpected error occurred while fetching data.' }, { status: 500 });
 	}
@@ -87,4 +96,13 @@ function searchFuzzysort(query, preparedData) {
 		});
 	console.timeEnd('Search Fuzzysort');
 	return searchResults;
+}
+
+function startTimer() {
+	const startTime = process.hrtime();
+	return function endTimer() {
+		const endTime = process.hrtime(startTime);
+		const measuredTime = endTime[0] * 1000 + endTime[1] / 1000000; // Convert to milliseconds
+		return measuredTime.toFixed(2) + 'ms';
+	};
 }
