@@ -5,9 +5,12 @@
 	let query = '';
 	let suggestions = [];
 
+	let latestFetch = Date.now();
+
 	$: fetchSuggestions(query);
 
 	async function fetchSuggestions(query) {
+		const timestamp = Date.now();
 		try {
 			const res = await fetch(`/search/suggestions?query=${query}`);
 
@@ -16,7 +19,12 @@
 			}
 
 			const data = await res.json();
-			suggestions = data.suggestions;
+
+			// Make sure it only updates if fetch is the newest one
+			if (timestamp > latestFetch) {
+				suggestions = data.suggestions;
+				latestFetch = timestamp;
+			}
 		} catch (error) {
 			console.error('Error fetching search suggestions:', error);
 			return []; // Return empty array in case of error
