@@ -7,7 +7,8 @@
 	import { LogOut } from 'lucide-svelte';
 	import { page } from '$app/stores';
 
-	export let data;
+	export let name = 'Your Name';
+	export let email = 'name@example.com';
 
 	let navOpen = false;
 
@@ -67,8 +68,8 @@
 					Learn
 				</Button>
 				<div class="mt-auto">
-					<h2 class="text-md px-4 font-medium">Jonas Wolter</h2>
-					<p class="mb-2 px-4 text-sm text-muted-foreground">jonas.wolter.ch@gmail.com</p>
+					<h2 class="text-md px-4 font-medium">{name}</h2>
+					<p class="text-muted-foreground mb-2 px-4 text-sm">{email}</p>
 				</div>
 
 				<!-- <h2 class="mt-auto">Jonas Wolter</h2> -->

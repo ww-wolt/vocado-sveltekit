@@ -4,6 +4,6 @@
 	export let data;
 </script>
 
-<Navigation />
+<Navigation name={data.name} email={data.email} />
 
 <slot />
