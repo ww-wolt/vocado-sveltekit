@@ -13,8 +13,9 @@
 
 	let query = '';
 	let suggestions = [];
-
 	let latestFetch = Date.now();
+
+	let searchInput;
 
 	$: fetchSuggestions(query);
 
@@ -61,6 +62,7 @@
 	<!-- <h1>Search</h1> -->
 	<form action="" class="relative mt-2 flex gap-2">
 		<Input
+			bind:inputElement={searchInput}
 			id="search"
 			placeholder="Search..."
 			name="search"
@@ -71,8 +73,10 @@
 		/>
 		{#if query}
 			<Button
-				on:click={() => {
+				on:click={(e) => {
+					e.preventDefault();
 					query = '';
+					searchInput.focus();
 				}}
 				variant="ghost"
 				class="absolute right-0 top-2 mx-2 h-6 p-3"
