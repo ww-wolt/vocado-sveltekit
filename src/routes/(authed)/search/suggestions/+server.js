@@ -70,7 +70,7 @@ function prepareFuzzysort(rawText) {
 	lines.forEach((line) => {
 		const [word, language] = line.split(SEPARATOR);
 		// array.push({ s: fuzzysort.prepare(word), l: language });
-		array.push({ d: deburr(word), w: word, l: language });
+		array.push({ d: fuzzysort.prepare(deburr(word)), w: word, l: language });
 	});
 	console.timeEnd('Prepare Fuzzysort');
 
