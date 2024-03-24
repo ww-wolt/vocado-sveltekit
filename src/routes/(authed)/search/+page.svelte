@@ -10,8 +10,19 @@
 	$: fetchSuggestions(query);
 
 	async function fetchSuggestions(query) {
+		if (!query) return;
 		const timestamp = Date.now();
 		try {
+			const options = { method: 'GET', headers: { 'User-Agent': 'insomnia/8.6.1' } };
+
+			// fetch(
+			// 	`https://m.dict.cc/inc/ajax_autosuggest.php?s=${query}&nr=50&lp_id=1&ldir=3&check_typo=1`,
+			// 	options
+			// )
+			// 	.then((response) => response.json())
+			// 	.then((response) => console.log(response))
+			// 	.catch((err) => console.error(err));
+
 			const res = await fetch(`/search/suggestions?query=${query}`);
 
 			if (!res.ok) {
