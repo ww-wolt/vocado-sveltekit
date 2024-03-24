@@ -13,7 +13,7 @@
 	<!-- <div class="h-full w-full"><h1 class="bg-lime-200 align-middle text-xl font-semibold tracking-tight">Search</h1></div> -->
 
 	<div class="absolute left-0 top-0 flex h-full w-full items-center">
-		<div class="w-[4.5rem]"></div>
+		<div class="w-[4.5rem] sm:w-6"></div>
 		<h1 class="text-md h-fit text-center font-medium">
 			{title}
 		</h1>
