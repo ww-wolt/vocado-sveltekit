@@ -1,3 +1,5 @@
+const languages = ['de', 'fr', 'en'];
+
 const INPUT_PATH = './static/dictionaries/raw';
 const OUTPUT_PATH = './static/dictionaries/optimized';
 
@@ -39,11 +41,12 @@ function prepareData(data) {
 	let stringArray = [];
 
 	data.forEach((obj) => {
-		const strDE = cleanTerm(obj.de);
-		const strEN = cleanTerm(obj.en);
-
-		if (strDE) stringArray.push(strDE + SEPARATOR + 'de');
-		if (strEN) stringArray.push(strEN + SEPARATOR + 'en');
+		languages.forEach((lang) => {
+			if (obj[lang]) {
+				const cleanedTerm = cleanTerm(obj[lang]);
+				if (cleanedTerm) stringArray.push(cleanedTerm + SEPARATOR + lang);
+			}
+		});
 	});
 
 	console.log('Original length:', stringArray.length);
@@ -57,20 +60,26 @@ function prepareData(data) {
 	// countStringsByFirstLetter(noDuplicates)
 	// console.log("🚀 ~ prepareData ~ countStringsByFirstLetter(noDuplicates):", countStringsByFirstLetter(noDuplicates));
 
-	const splitted = splitByFirstLetter(noDuplicates);
+	const splitted = splitBySearchGroup(noDuplicates);
 
 	return splitted;
 }
 
-function writeDataToFiles(dataObj) {
+function writeDataToFiles(folderName, dataObj) {
 	console.log('Writing data to files...');
+	const folderPath = path.join(OUTPUT_PATH, folderName);
+
+	if (!fs.existsSync(folderPath)) {
+		fs.mkdirSync(folderPath);
+	}
+
 	// console.log('🚀 ~ writeDataToFiles ~ dataObj:', dataObj);
 	try {
 		// Loop through each property of the dataObj
 		for (let key in dataObj) {
 			// Check that property is real and not inherited from prototype
 			if (Object.prototype.hasOwnProperty.call(dataObj, key)) {
-				const filename = path.join(OUTPUT_PATH, `${key}.txt`);
+				const filename = path.join(folderPath, `${key}.txt`);
 				const content = dataObj[key].join('\n');
 
 				// Write content to file
@@ -82,6 +91,7 @@ function writeDataToFiles(dataObj) {
 		console.error('Error writing data to files:', err);
 	}
 	console.log('Finished writing.');
+	console.log('');
 }
 
 // function countStringsByFirstLetter(strings) {
@@ -96,13 +106,19 @@ function writeDataToFiles(dataObj) {
 // 	return letterCounts;
 // }
 
-function splitByFirstLetter(strings) {
+function splitBySearchGroup(strings) {
 	const groupedStrings = groupBy(strings, (str) => getSearchGroupName(str));
 
 	// If any letters from a-z are missing, fill them with empty arrays
-	for (let letter of 'abcdefghijklmnopqrstuvwxyz') {
-		if (!Object.prototype.hasOwnProperty.call(groupedStrings, letter)) {
-			groupedStrings[letter] = [];
+	for (let l1 of 'abcdefghijklmnopqrstuvwxyz') {
+		if (!Object.prototype.hasOwnProperty.call(groupedStrings, l1)) {
+			groupedStrings[l1] = [];
+		}
+		for (let l2 of 'abcdefghijklmnopqrstuvwxyz') {
+			const key = l1 + l2;
+			if (!Object.prototype.hasOwnProperty.call(groupedStrings, key)) {
+				groupedStrings[key] = [];
+			}
 		}
 	}
 
@@ -113,9 +129,19 @@ function splitByFirstLetter(strings) {
 	return groupedStrings;
 }
 
+// function getSearchGroupName(string) {
+// 	const normalizedFirstLetter = deburr(string.charAt(0)).toLowerCase();
+// 	return /^[a-z]$/.test(normalizedFirstLetter) ? normalizedFirstLetter : 'other';
+// }
+
 function getSearchGroupName(string) {
-	const normalizedFirstLetter = deburr(string.charAt(0)).toLowerCase();
-	return /^[a-z]$/.test(normalizedFirstLetter) ? normalizedFirstLetter : 'other';
+	if (string.includes(SEPARATOR)) string = string.split(SEPARATOR)[0];
+
+	const normalizedFirstTwoLetters = deburr(string.slice(0, 2)).toLowerCase().trim();
+	const searchGroupName = /^[a-z]{1,2}$/.test(normalizedFirstTwoLetters)
+		? normalizedFirstTwoLetters
+		: 'other';
+	return searchGroupName;
 }
 
 const files = fs.readdirSync(INPUT_PATH);
@@ -124,7 +150,9 @@ files.forEach(function (file) {
 	if (path.extname(filePath).toLowerCase() === '.csv') {
 		const parsedData = parseCSVFile(filePath);
 		const preparedData = prepareData(parsedData);
-		writeDataToFiles(preparedData);
+
+		const folderName = file.replace('.csv', '');
+		writeDataToFiles(folderName, preparedData);
 		// const jsFileName = path.basename(file, '.csv') + 'json.';
 		// const outputFile = path.join(OUTPUT_PATH, jsFileName);
 		// console.log('Writing JSON to File...', jsFileName);

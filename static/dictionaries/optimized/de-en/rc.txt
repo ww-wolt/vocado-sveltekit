@@ -1,0 +1,15 @@
+RC element֍en
+RC pavement֍en
+RC pipe֍en
+RC pontoon֍en
+RC snubber֍en
+RC tower֍en
+RC-Funkenlöschkombination֍de
+RC-Glied֍de
+RC-Löschglied֍de
+RC-Löschkombination֍de
+RC-Snubberglied֍de
+RCA jack֍en
+RCAF֍de
+RCBO֍de
+RCLL function֍en

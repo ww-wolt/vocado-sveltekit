@@ -1,0 +1,8 @@
+GTC order֍en
+GTD-Methode֍de
+GTIN code֍en
+GTIN-Artikelidentifikation֍de
+GTIN-Code֍de
+GTO-Thyristor֍de
+GtL-Kraftstoff֍de
+GtL-Verfahren֍de

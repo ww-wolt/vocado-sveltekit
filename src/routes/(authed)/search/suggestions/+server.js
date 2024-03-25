@@ -48,7 +48,7 @@ export async function GET({ url, fetch }) {
 }
 
 async function fetchData(fetch, searchGroup) {
-	const suggestionsURL = `/dictionaries/optimized/${searchGroup}.txt`;
+	const suggestionsURL = `/dictionaries/optimized/de-en/${searchGroup}.txt`;
 	const res = await fetch(suggestionsURL);
 	if (!res.ok) {
 		throw new Error(`Response error ${res.status}: ${res.statusText}`);
@@ -58,8 +58,13 @@ async function fetchData(fetch, searchGroup) {
 }
 
 function getSearchGroupName(string) {
-	const normalizedFirstLetter = deburr(string.charAt(0)).toLowerCase();
-	return /^[a-z]$/.test(normalizedFirstLetter) ? normalizedFirstLetter : 'other';
+	if (string.includes(SEPARATOR)) string = string.split(SEPARATOR)[0];
+
+	const normalizedFirstTwoLetters = deburr(string.slice(0, 2)).toLowerCase().trim();
+	const searchGroupName = /^[a-z]{1,2}$/.test(normalizedFirstTwoLetters)
+		? normalizedFirstTwoLetters
+		: 'other';
+	return searchGroupName;
 }
 
 function prepareFuzzysort(rawText) {
@@ -69,7 +74,6 @@ function prepareFuzzysort(rawText) {
 	const lines = rawText.split('\n');
 	lines.forEach((line) => {
 		const [word, language] = line.split(SEPARATOR);
-		// array.push({ s: fuzzysort.prepare(word), l: language });
 		array.push({ d: fuzzysort.prepare(deburr(word)), w: word, l: language });
 	});
 	console.timeEnd('Prepare Fuzzysort');

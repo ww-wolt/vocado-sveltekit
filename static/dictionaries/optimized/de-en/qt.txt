@@ -1,0 +1,9 @@
+QT interval prolongation֍en
+QT interval֍en
+QT shortening֍en
+QT-Dauer֍de
+QT-Intervall֍de
+QT-Zeit֍de
+QTK-Dreieck֍de
+QTL mapping֍en
+QTL-Kartierung֍de

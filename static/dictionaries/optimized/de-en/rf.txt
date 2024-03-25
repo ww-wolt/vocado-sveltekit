@@ -1,0 +1,6 @@
+RF coupling resistance֍en
+RF emission֍en
+RF modulator֍en
+RF-Modulator֍de
+RFID tag֍en
+RFID-Etikett֍de

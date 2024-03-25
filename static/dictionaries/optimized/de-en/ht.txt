@@ -1,0 +1,13 @@
+HTML format֍en
+HTML heading֍en
+HTML support֍en
+HTML-Format֍de
+HTML-Kopfzeile֍de
+HTML-Unterstützung֍de
+HTML-based user interface֍en
+HTML-basierte Benutzeroberfläche֍de
+HTSC Hall magnetometer֍en
+HTTP cookie֍en
+HTTP status code֍en
+HTTP-Cookie֍de
+HTTP-Statuscode֍de
